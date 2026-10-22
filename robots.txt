@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://1phone2thrones.vercel.app/sitemap.xml
