@@ -308,19 +308,20 @@ window.P2T = window.P2T || {};
   });
   function wireVideo(f) {
     safe(function () {
-      var id = f.dataset.yt, b = $('button', f);
-      if (!/^[A-Za-z0-9_-]{11}$/.test(id) || !b) { f.hidden = true; return; }
-      b.addEventListener('click', function () {
+      var id = f.dataset.yt, b = $('button', f), auto = f.hasAttribute('data-autoplay');
+      if (!/^[A-Za-z0-9_-]{11}$/.test(id) || (!b && !auto)) { f.hidden = true; return; }
+      function start() {
         var ifr = doc.createElement('iframe');
         ifr.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
         ifr.title = f.dataset.title || 'Video';
         ifr.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
         ifr.allowFullscreen = true;
         f.replaceChildren(ifr);
-        ifr.focus();
-      });
-      // The Videos page starts its featured video on load, with sound where the browser allows it
-      if (f.hasAttribute('data-autoplay')) b.click();
+        if (!auto) ifr.focus();
+      }
+      if (b) b.addEventListener('click', start);
+      // The Videos page shows its featured video straight away, with sound where the browser allows it
+      if (auto) start();
     });
   }
   safe(function () {
