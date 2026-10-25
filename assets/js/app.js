@@ -37,6 +37,18 @@ window.P2T = window.P2T || {};
     });
   };
 
+  // Settings kept in the Sheet (Settings > Featured video). Falls back to config.js if the Sheet cannot be reached.
+  var siteCache = null;
+  P2T.getSite = function () {
+    if (siteCache) return siteCache;
+    var fallback = { videoId: (window.SITE_CONFIG || {}).HERO_VIDEO_ID || '', cover: '' };
+    if (!base()) return (siteCache = Promise.resolve(fallback));
+    siteCache = fetch(base() + '?api=site', { method: 'GET' }).then(parse).then(function (r) {
+      return r && r.ok && /^[A-Za-z0-9_-]{11}$/.test(r.videoId || '') ? { videoId: r.videoId, cover: String(r.cover || '') } : fallback;
+    }).catch(function () { return fallback; });
+    return siteCache;
+  };
+
   /** action: 'subscribe' | 'signup' | 'registerEvent' | 'speaking' | 'contact'. Resolves to the server's JSON answer. */
   P2T.post = function (action, fields, openedAt) {
     if (!base()) return Promise.resolve({ ok: false, error: 'Sign-up is not connected yet. Please try again later.' });
@@ -274,12 +286,28 @@ window.P2T = window.P2T || {};
 
   /* ---------- video facades ---------- */
   safe(function () {
-    // data-yt="CONFIG" means "use HERO_VIDEO_ID from config.js"
+    // The featured video comes from the Sheet (Settings > Featured video); config.js is the fallback.
+    // The page ships with the cover picture of the config.js video. If the Sheet names a different video,
+    // its cover is used instead (the script fetches it, so visitors never contact YouTube before pressing play).
+    var frames = $$('.vframe[data-yt="CONFIG"], .vframe.vlink');
+    if (!frames.length) return;
     var cfgId = (window.SITE_CONFIG || {}).HERO_VIDEO_ID || '';
-    $$('.vframe[data-yt="CONFIG"]').forEach(function (f) { if (cfgId) f.dataset.yt = cfgId; else f.hidden = true; });
+    P2T.getSite().then(function (site) {
+      frames.forEach(function (f) {
+        var id = site.videoId;
+        if (!id) { f.hidden = true; return; }
+        var img = $('img.cover', f);
+        if (id !== cfgId) {
+          if (site.cover && img) img.src = site.cover; else if (img) img.remove();
+        } else if (site.cover && img) img.src = site.cover;
+        if (f.classList.contains('vlink')) return;
+        f.dataset.yt = id;
+        wireVideo(f);
+      });
+    });
   });
-  safe(function () {
-    $$('.vframe[data-yt]').forEach(function (f) {
+  function wireVideo(f) {
+    safe(function () {
       var id = f.dataset.yt, b = $('button', f);
       if (!/^[A-Za-z0-9_-]{11}$/.test(id) || !b) { f.hidden = true; return; }
       b.addEventListener('click', function () {
@@ -294,6 +322,9 @@ window.P2T = window.P2T || {};
       // Arriving from the home-page cover counts as pressing play: start the video, with sound where the browser allows it
       if (f.hasAttribute('data-autoplay') && qs.get('play') === '1') b.click();
     });
+  }
+  safe(function () {
+    $$('.vframe[data-yt]:not([data-yt="CONFIG"])').forEach(wireVideo);
   });
 
   /* ---------- pause button for the scrolling topics ---------- */

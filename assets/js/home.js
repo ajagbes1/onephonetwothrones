@@ -7,9 +7,12 @@
 
   // Hero video: the photo shows first (fast, no third-party request). A tap loads the video with sound.
   var play = doc.getElementById('heroPlay'), id = (window.SITE_CONFIG || {}).HERO_VIDEO_ID || '';
+  // The Sheet's "Featured video" setting wins over config.js once it has loaded
+  if (play && window.P2T && P2T.getSite) P2T.getSite().then(function (s) { if (s.videoId) id = s.videoId; else if (!id) play.remove(); });
   if (play) {
-    if (!/^[A-Za-z0-9_-]{11}$/.test(id)) { play.remove(); }
+    if (!/^[A-Za-z0-9_-]{11}$/.test(id) && !(window.P2T && P2T.getSite)) { play.remove(); }
     else play.addEventListener('click', function () {
+      if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return;
       var screen = play.closest('.screen'), ifr = doc.createElement('iframe');
       ifr.className = 'vid';
       ifr.title = '1 Phone, 2 Thrones video';
