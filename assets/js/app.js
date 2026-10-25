@@ -308,20 +308,21 @@ window.P2T = window.P2T || {};
   });
   function wireVideo(f) {
     safe(function () {
-      var id = f.dataset.yt, b = $('button', f), auto = f.hasAttribute('data-autoplay');
-      if (!/^[A-Za-z0-9_-]{11}$/.test(id) || (!b && !auto)) { f.hidden = true; return; }
+      var id = f.dataset.yt, b = $('button', f), auto = f.hasAttribute('data-autoplay'), embed = f.hasAttribute('data-embed');
+      if (!/^[A-Za-z0-9_-]{11}$/.test(id) || (!b && !auto && !embed)) { f.hidden = true; return; }
       function start() {
         var ifr = doc.createElement('iframe');
-        ifr.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+        ifr.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=' + (embed ? 0 : 1) + '&rel=0&playsinline=1&modestbranding=1';
         ifr.title = f.dataset.title || 'Video';
         ifr.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
         ifr.allowFullscreen = true;
         f.replaceChildren(ifr);
-        if (!auto) ifr.focus();
+        if (!auto && !embed) ifr.focus();
       }
       if (b) b.addEventListener('click', start);
       // The Videos page shows its featured video straight away, with sound where the browser allows it
-      if (auto) start();
+      // The home page shows the video in its phone from the start, but waits for a press on play
+      if (auto || embed) start();
     });
   }
   safe(function () {
