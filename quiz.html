@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Throne Check | 1 Phone, 2 Thrones</title>
+  <meta name="description" content="Ten quick questions. Find out which throne your phone is serving, and get a plan to use it on purpose.">
+  
+  <link rel="canonical" href="https://1phone2thrones.vercel.app/quiz">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="1 Phone, 2 Thrones">
+  <meta property="og:title" content="The Throne Check | 1 Phone, 2 Thrones">
+  <meta property="og:description" content="Ten quick questions. Find out which throne your phone is serving, and get a plan to use it on purpose.">
+  <meta property="og:url" content="https://1phone2thrones.vercel.app/quiz">
+  <meta property="og:image" content="https://1phone2thrones.vercel.app/assets/og-quiz.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Throne Check: which throne is your phone serving? Ten questions, two minutes.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Throne Check | 1 Phone, 2 Thrones">
+  <meta name="twitter:description" content="Ten quick questions. Find out which throne your phone is serving, and get a plan to use it on purpose.">
+  <meta name="twitter:image" content="https://1phone2thrones.vercel.app/assets/og-quiz.jpg">
+  <meta name="theme-color" content="#0E0E11">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"></noscript>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script>document.documentElement.className += ' js';</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://1phone2thrones.vercel.app/"},{"@type":"ListItem","position":2,"name":"Throne Check","item":"https://1phone2thrones.vercel.app/quiz"}]}</script>
+</head>
+<body class="">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bar" id="bar" aria-hidden="true"></div>
+<nav id="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="1 Phone, 2 Thrones, home"><img src="/assets/img/logo-320.webp" srcset="/assets/img/logo-160.webp 160w, /assets/img/logo-320.webp 320w" sizes="(max-width: 1020px) 91px, 115px" width="115" height="58" alt="1 Phone, 2 Thrones"></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span></button>
+    <div class="links" id="menu">
+      <a href="/about">About</a>
+      <a href="/challenge">Challenge</a>
+      <a href="/events">Events</a>
+      <a href="/speaking">Speaking</a>
+      <details class="more has-current">
+        <summary>More</summary>
+        <div class="drop">
+          <a href="/quiz" aria-current="page">Throne Check</a>
+          <a href="/resources">Resources</a>
+          <a href="/videos">Videos</a>
+          <a href="/mentorship">Mentorship</a>
+          <a href="/contact">Contact</a>
+        </div>
+      </details>
+      <a class="btn solid" href="/challenge" data-keep-src>Start the challenge</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+<div class="page-head"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Throne Check</li></ol></nav>
+  <p class="eyebrow">Free quiz</p>
+  <h1>The Throne Check</h1>
+  <p class="lead">Ten honest questions, about two minutes. See which throne your phone is serving.</p>
+</div></div>
+
+<section class="qz-section" aria-label="The Throne Check quiz">
+  <div class="wrap">
+    <div class="qz" id="qz">
+      <noscript><p class="msg err">The Throne Check needs JavaScript. Please turn it on to take the quiz.</p></noscript>
+
+      <div class="qz-screen on" id="sIntro">
+        <h2>Which throne is your phone <em>serving?</em></h2>
+        <p class="lead">Your phone serves one of two kingdoms every day: consumption or purpose. Answer ten honest questions and see where you stand, with a clear next step for your result.</p>
+        <button class="btn solid" id="start" type="button">Start the Throne Check</button>
+        <ul class="chips" aria-label="About the quiz"><li>10 questions</li><li>About 2 minutes</li><li>Free</li></ul>
+      </div>
+
+      <div class="qz-screen" id="sQuiz" aria-live="polite">
+        <div class="qz-progress"><span id="count">1 of 10</span><div class="qz-track" id="progress" role="progressbar" aria-label="Quiz progress" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1"><div class="qz-fill" id="fill"></div></div></div>
+        <h2 id="qText"></h2>
+        <div class="qz-opts" id="opts" role="radiogroup" aria-labelledby="qText"></div>
+        <div class="qz-nav"><button class="qz-link" id="prev" type="button">Previous question</button></div>
+        <p class="qz-hint">Tip: press A, B, C or D on a keyboard to answer.</p>
+      </div>
+
+      <div class="qz-screen" id="sResult">
+        <span class="pill">Your result</span>
+        <h2 class="qz-result" id="rTitle"></h2>
+        <p class="lead" id="rSummary"></p>
+        <div class="qz-meter" aria-hidden="true">
+          <div class="qz-bar"><div class="qz-marker" id="marker"></div></div>
+          <div class="qz-zones"><span data-z="0">Consumption</span><span data-z="1">Divided</span><span data-z="2">Purpose</span></div>
+        </div>
+        <p class="qz-score">Your score: <b id="rScore"></b> out of 30</p>
+
+        <div class="card" id="gate">
+          <h3>See your full breakdown</h3>
+          <p class="lead" style="font-size:16px;margin-bottom:20px">Your score in all 10 areas, the three areas to work on first, and a tip for each. We'll also send you each new video and lesson by email.</p>
+          <form id="gf" class="form-plain" novalidate>
+            <div class="row2">
+              <div class="field"><label for="fn">First name</label><input id="fn" type="text" maxlength="60" autocomplete="given-name" required aria-describedby="err-fn"><p class="err" id="err-fn"></p></div>
+              <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email" inputmode="email" required aria-describedby="err-em"><p class="err" id="err-em"></p></div>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Leave this empty<input id="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <div class="field">
+              <label class="consent"><input id="cs" type="checkbox" required aria-describedby="err-cs"><span>I agree to receive emails about new videos and events from 1 Phone, 2 Thrones. I can unsubscribe at any time. <a href="/privacy">Privacy Policy</a></span></label>
+              <p class="err" id="err-cs"></p>
+            </div>
+            <button class="btn solid" id="gb" type="submit">Show my full breakdown</button>
+            <p class="msg" id="gm" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="card" id="full" hidden>
+          <h3 id="fullTitle">Your 10 areas</h3>
+          <p class="lead" style="font-size:15px;margin:0" id="checkNote"></p>
+          <div class="qz-areas" id="areas"></div>
+          <h3 style="margin-top:28px">Start with these three</h3>
+          <ul class="qz-tips" id="tips"></ul>
+          <div class="btns">
+            <a class="btn solid" href="/challenge?src=Throne%20Check">Start the free 30-day challenge</a>
+            <a class="btn ghost" href="https://www.youtube.com/@ajagbe_samuel" target="_blank" rel="noopener">Watch the lessons<span class="sr-only"> (opens in a new tab)</span></a>
+          </div>
+        </div>
+
+        <div class="qz-share">
+          <p>Ask a friend which throne their phone is serving.</p>
+          <div class="btns">
+            <a class="btn ghost" id="shareWa" target="_blank" rel="noopener">Share on WhatsApp<span class="sr-only"> (opens in a new tab)</span></a>
+            <button class="btn ghost" id="shareCopy" type="button">Copy link</button>
+            <button class="btn ghost" id="retake" type="button">Take it again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="motto">One phone, two thrones.<br><em>The choice is yours.</em></p>
+    <div class="cols">
+      <div class="f-about">
+        <img src="/assets/img/logo-320.webp" srcset="/assets/img/logo-160.webp 160w, /assets/img/logo-320.webp 320w" sizes="143px" width="143" height="72" alt="1 Phone, 2 Thrones" loading="lazy">
+        <p>A movement by Samuel Ajagbe. Use the phone in your hand to build your future and serve God's Kingdom.</p>
+      </div>
+      <div>
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="/about">About Samuel</a></li>
+          <li><a href="/challenge">30-Day Challenge</a></li>
+          <li><a href="/quiz">Throne Check quiz</a></li>
+          <li><a href="/resources">Resources</a></li>
+          <li><a href="/videos">Videos and insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Work with Samuel</h2>
+        <ul>
+          <li><a href="/events">Events</a></li>
+          <li><a href="/speaking">Speaking</a></li>
+          <li><a href="/mentorship">Mentorship</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <p>&copy; <span data-year>2026</span> Samuel Ajagbe, 1 Phone, 2 Thrones</p>
+        <p style="font-size:13px;margin-top:6px">Photo: Sunnyphem Photography</p>
+      </div>
+      <div class="social">
+        <a href="https://www.youtube.com/@ajagbe_samuel" target="_blank" rel="noopener">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
+        <a href="https://www.instagram.com/ajagbesamuelolajide" target="_blank" rel="noopener">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+        <a href="https://www.facebook.com/ajagbesamuelolajide" target="_blank" rel="noopener">Facebook<span class="sr-only"> (opens in a new tab)</span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script defer src="/config.js"></script>
+<script defer src="/assets/js/app.js"></script>
+<script defer src="/assets/js/quiz.js"></script>
+</body>
+</html>
