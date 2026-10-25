@@ -291,6 +291,8 @@ window.P2T = window.P2T || {};
         f.replaceChildren(ifr);
         ifr.focus();
       });
+      // Arriving from the home-page cover counts as pressing play: start the video, with sound where the browser allows it
+      if (f.hasAttribute('data-autoplay') && qs.get('play') === '1') b.click();
     });
   });
 
