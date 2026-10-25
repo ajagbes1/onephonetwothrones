@@ -287,27 +287,35 @@ window.P2T = window.P2T || {};
   /* ---------- video facades ---------- */
   safe(function () {
     // The featured video comes from the Sheet (Settings > Featured video); config.js is the fallback.
-    // The page ships with the cover picture of the config.js video. If the Sheet names a different video,
-    // its cover is used instead (the script fetches it, so visitors never contact YouTube before pressing play).
-    var frames = $$('.vframe[data-yt="CONFIG"], .vframe.vlink');
+    // To avoid waiting for the Sheet, the player starts at once with the last video this browser saw (or the
+    // config.js one) and is swapped only if the Sheet names a different video.
+    var frames = $$('.vframe[data-yt="CONFIG"]');
     if (!frames.length) return;
-    var cfgId = (window.SITE_CONFIG || {}).HERO_VIDEO_ID || '';
-    P2T.getSite().then(function (site) {
+    var cfgId = (window.SITE_CONFIG || {}).HERO_VIDEO_ID || '', applied = null;
+    function apply(site) {
+      var id = site.videoId || '';
+      if (id === applied) return;
+      applied = id;
       frames.forEach(function (f) {
-        var id = site.videoId;
         if (!id) { f.hidden = true; return; }
-        var img = $('img.cover', f);
-        if (id !== cfgId) {
-          if (site.cover && img) img.src = site.cover; else if (img) img.remove();
-        } else if (site.cover && img) img.src = site.cover;
-        if (f.classList.contains('vlink')) return;
+        f.hidden = false;
         f.dataset.yt = id;
-        wireVideo(f);
+        wireVideo(f, site.cover || (id === cfgId ? '/assets/video-cover.webp' : ''));
       });
+    }
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem('p2t_site') || 'null'); } catch (e) { cached = null; }
+    if (cached && /^[A-Za-z0-9_-]{11}$/.test(cached.videoId || '')) apply(cached);
+    else if (cfgId) apply({ videoId: cfgId, cover: '' });
+    P2T.getSite().then(function (site) {
+      try { localStorage.setItem('p2t_site', JSON.stringify(site)); } catch (e) { /* storage blocked: fine */ }
+      apply(site);
     });
   });
-  function wireVideo(f) {
+  // cover: a picture of the video shown while the YouTube player loads, so the visitor never sees a black box
+  function wireVideo(f, cover) {
     safe(function () {
+      f.dataset.wired = '1';
       var id = f.dataset.yt, b = $('button', f), auto = f.hasAttribute('data-autoplay'), embed = f.hasAttribute('data-embed');
       if (!/^[A-Za-z0-9_-]{11}$/.test(id) || (!b && !auto && !embed)) { f.hidden = true; return; }
       function start() {
@@ -317,6 +325,14 @@ window.P2T = window.P2T || {};
         ifr.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
         ifr.allowFullscreen = true;
         f.replaceChildren(ifr);
+        if (cover) {
+          var ph = doc.createElement('img');
+          ph.className = 'cover'; ph.alt = ''; ph.src = cover;
+          f.appendChild(ph);
+          ifr.addEventListener('load', function () {
+            setTimeout(function () { ph.classList.add('gone'); setTimeout(function () { ph.remove(); }, 500); }, 1200);
+          });
+        }
         if (!auto && !embed) ifr.focus();
       }
       if (b) b.addEventListener('click', start);
@@ -326,7 +342,7 @@ window.P2T = window.P2T || {};
     });
   }
   safe(function () {
-    $$('.vframe[data-yt]:not([data-yt="CONFIG"])').forEach(wireVideo);
+    $('.vframe[data-yt]:not([data-yt="CONFIG"])').forEach(function (f) { if (!f.dataset.wired) wireVideo(f, ''); });
   });
 
   /* ---------- pause button for the scrolling topics ---------- */

@@ -5,6 +5,6 @@ window.SITE_CONFIG = {
   APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyV9Z4H0GJj55SgELR_Bc6xrpDNlJ1BxeI9Ey5uMH8TEPhU7-CM0qZICCEy3I0VPF5TFw/exec',
 
   // The YouTube video that plays inside the phone. Use the 11-character ID from the link:
-  // youtube.com/shorts/XUvbclPeOnw  ->  XUvbclPeOnw. Leave empty ('') to show your photo instead.
-  HERO_VIDEO_ID: 'XUvbclPeOnw'
+  // youtube.com/shorts/8K6fBqBVLOk  ->  8K6fBqBVLOk. Leave empty ('') to show your photo instead.
+  HERO_VIDEO_ID: '8K6fBqBVLOk'
 };
