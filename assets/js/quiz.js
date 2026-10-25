@@ -113,9 +113,9 @@
     setTimeout(function () { $('marker').style.left = (total / 30 * 100) + '%'; }, reduce ? 0 : 150);
     var url = location.origin + '/quiz';
     $('shareWa').href = 'https://wa.me/?text=' + encodeURIComponent('I got "' + band.title + '" on the Throne Check. Which throne is your phone serving? ' + url);
-    // Someone who already joined during this visit sees the breakdown straight away on a retake
-    $('gate').hidden = subscribed; $('full').hidden = !subscribed;
-    if (subscribed) unlock('already-in-session');
+    // The breakdown is free: it shows straight away. The email sign-up below it is optional.
+    $('gate').hidden = subscribed;
+    unlock('free');
   }
 
   function unlock(mode) {
@@ -127,10 +127,10 @@
     var low = per.map(function (a, n) { return { a: a, n: n }; }).sort(function (x, y) { return x.a.s - y.a.s || x.n - y.n; }).slice(0, 3);
     $('tips').innerHTML = low.map(function (x) { return '<li><b>' + esc(x.a.area) + '</b>' + esc(TIPS[x.a.area]) + '</li>'; }).join('');
     $('checkNote').textContent = mode === 'already' ? "You're already subscribed, so there's nothing to confirm."
-      : mode === 'already-in-session' ? 'Your breakdown for this result.' : 'Check your email and tap the confirm button to finish subscribing.';
-    $('gate').hidden = true; $('full').hidden = false;
+      : mode === 'new' ? 'Check your email and tap the confirm button to finish subscribing.' : '';
+    $('full').hidden = false;
     var h = $('fullTitle'); h.setAttribute('tabindex', '-1');
-    if (mode !== 'already-in-session') { h.focus({ preventScroll: true }); $('full').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }
+    if (mode === 'new' || mode === 'already') { $('gate').hidden = true; $('checkNote').focus({ preventScroll: true }); }
   }
 
   $('start').addEventListener('click', function () { i = 0; ans = new Array(Q.length); render(false); show('sQuiz', 'qText'); });
@@ -165,15 +165,16 @@
     var m = $('gm'), b = $('gb'), label = b.textContent;
     m.className = 'msg'; m.textContent = '';
     var first = $('fn').value.trim(), email = $('em').value.trim();
-    fieldErr('fn', 'err-fn', ''); fieldErr('em', 'err-em', ''); fieldErr('cs', 'err-cs', '');
+    fieldErr('fn', 'err-fn', ''); fieldErr('em', 'err-em', ''); fieldErr('cs', 'err-cs', ''); fieldErr('ad', 'err-ad', '');
     var bad = null;
     if (!first) { fieldErr('fn', 'err-fn', 'Enter your first name.'); bad = bad || 'fn'; }
     if (!email || email.length > 254 || !EMAIL.test(email)) { fieldErr('em', 'err-em', 'Enter a valid email address, for example name@example.com.'); bad = bad || 'em'; }
     if (!$('cs').checked) { fieldErr('cs', 'err-cs', 'Tick the box to continue.'); bad = bad || 'cs'; }
+    if (!$('ad').checked) { fieldErr('ad', 'err-ad', 'Please confirm that you are 18 or over.'); bad = bad || 'ad'; }
     if (bad) { $(bad).focus(); m.className = 'msg err'; m.textContent = 'Please fix the highlighted fields.'; return; }
     if (!P2T.apiReady()) { m.className = 'msg err'; m.textContent = 'Sign-up is not connected yet. Please try again later.'; return; }
     b.disabled = true; b.textContent = 'One moment...'; $('gf').setAttribute('aria-busy', 'true');
-    var data = { firstName: first, email: email, consent: true, website: $('website').value, source: 'Throne Check', quiz: result.label };
+    var data = { firstName: first, email: email, consent: true, adult: true, website: $('website').value, source: 'Throne Check', quiz: result.label };
     P2T.post('subscribe', data, openedAt).then(function (res) {
       if (res && res.ok) { subscribed = true; unlock(res.state === 'already' ? 'already' : 'new'); }
       else { m.className = 'msg err'; m.textContent = (res && res.error) || 'Something went wrong. Try again in a moment.'; }

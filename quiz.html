@@ -97,27 +97,9 @@
         </div>
         <p class="qz-score">Your score: <b id="rScore"></b> out of 30</p>
 
-        <div class="card" id="gate">
-          <h3>See your full breakdown</h3>
-          <p class="lead" style="font-size:16px;margin-bottom:20px">Your score in all 10 areas, the three areas to work on first, and a tip for each. We'll also send you each new video and lesson by email.</p>
-          <form id="gf" class="form-plain" novalidate>
-            <div class="row2">
-              <div class="field"><label for="fn">First name</label><input id="fn" type="text" maxlength="60" autocomplete="given-name" required aria-describedby="err-fn"><p class="err" id="err-fn"></p></div>
-              <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email" inputmode="email" required aria-describedby="err-em"><p class="err" id="err-em"></p></div>
-            </div>
-            <div class="hp" aria-hidden="true"><label>Leave this empty<input id="website" type="text" tabindex="-1" autocomplete="off"></label></div>
-            <div class="field">
-              <label class="consent"><input id="cs" type="checkbox" required aria-describedby="err-cs"><span>I agree to receive emails about new videos and events from 1 Phone, 2 Thrones. I can unsubscribe at any time. <a href="/privacy">Privacy Policy</a></span></label>
-              <p class="err" id="err-cs"></p>
-            </div>
-            <button class="btn solid" id="gb" type="submit">Show my full breakdown</button>
-            <p class="msg" id="gm" role="status" aria-live="polite"></p>
-          </form>
-        </div>
-
-        <div class="card" id="full" hidden>
+        <div class="card" id="full" >
           <h3 id="fullTitle">Your 10 areas</h3>
-          <p class="lead" style="font-size:15px;margin:0" id="checkNote"></p>
+          <p class="lead" style="font-size:15px;margin:0" id="checkNote" role="status" aria-live="polite" tabindex="-1"></p>
           <div class="qz-areas" id="areas"></div>
           <h3 style="margin-top:28px">Start with these three</h3>
           <ul class="qz-tips" id="tips"></ul>
@@ -125,6 +107,28 @@
             <a class="btn solid" href="/challenge?src=Throne%20Check">Start the free 30-day challenge</a>
             <a class="btn ghost" href="https://www.youtube.com/@ajagbe_samuel" target="_blank" rel="noopener">Watch the lessons<span class="sr-only"> (opens in a new tab)</span></a>
           </div>
+        </div>
+
+        <div class="card" id="gate">
+          <h3>Get each new video by email</h3>
+          <p class="lead" style="font-size:16px;margin-bottom:20px">Optional. Your breakdown above is yours either way. If you would like each new video and lesson in your inbox, add your details and we will also keep your result with your sign-up.</p>
+          <form id="gf" class="form-plain" novalidate>
+            <div class="row2">
+              <div class="field"><label for="fn">First name</label><input id="fn" type="text" maxlength="60" autocomplete="given-name" required aria-describedby="err-fn"><p class="err" id="err-fn"></p></div>
+              <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email" inputmode="email" required aria-describedby="err-em"><p class="err" id="err-em"></p></div>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Leave this empty<input id="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <div class="field">
+              <label class="consent"><input id="cs" type="checkbox" required aria-describedby="err-cs"><span>I agree to receive emails about new videos and events from 1 Phone, 2 Thrones. The content is based on Christian faith, so signing up may reveal my religious belief, and I agree to that. I can withdraw consent at any time by unsubscribing. <a href="/privacy">Privacy Policy</a></span></label>
+              <p class="err" id="err-cs"></p>
+            </div>
+            <div class="field">
+              <label class="consent"><input id="ad" type="checkbox" required aria-describedby="err-ad"><span>I am 18 years old or over.</span></label>
+              <p class="err" id="err-ad"></p>
+            </div>
+            <button class="btn solid" id="gb" type="submit">Send me new videos</button>
+            <p class="msg" id="gm" role="status" aria-live="polite"></p>
+          </form>
         </div>
 
         <div class="qz-share">
@@ -185,6 +189,7 @@
         <a href="https://www.youtube.com/@ajagbe_samuel" target="_blank" rel="noopener">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         <a href="https://www.instagram.com/ajagbesamuelolajide" target="_blank" rel="noopener">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
         <a href="https://www.facebook.com/ajagbesamuelolajide" target="_blank" rel="noopener">Facebook<span class="sr-only"> (opens in a new tab)</span></a>
+        <a href="https://whatsapp.com/channel/0029VbE4adbIXnlljjpR1I0Y" target="_blank" rel="noopener">WhatsApp Channel<span class="sr-only"> (opens in a new tab)</span></a>
       </div>
     </div>
   </div>

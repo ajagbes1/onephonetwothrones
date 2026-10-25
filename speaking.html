@@ -110,7 +110,7 @@
           <div class="field"><label for="s-org">Organisation or group</label><input id="s-org" name="organization" type="text" maxlength="120" autocomplete="organization" required aria-describedby="err-organization" data-msg="Enter your organisation or group."><p class="err" id="err-organization"></p></div>
           <div class="field"><label for="s-role">Your role <span class="opt">(optional)</span></label><input id="s-role" name="role" type="text" maxlength="80" autocomplete="organization-title"></div>
         </div>
-        <div class="field"><label for="s-phone">Phone or WhatsApp <span class="opt">(optional)</span></label><input id="s-phone" name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="+234 ..."></div>
+        <div class="field"><label for="s-phone">Phone or WhatsApp <span class="opt">(optional)</span></label><input id="s-phone" name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="+234 ..." aria-describedby="s-phone-hint"><p class="hint" id="s-phone-hint">Used only to reach you about this invitation.</p></div>
         <div class="row2">
           <div class="field"><label for="s-event">Event name</label><input id="s-event" name="eventName" type="text" maxlength="120" required aria-describedby="err-eventName" data-msg="Enter the name of the event."><p class="err" id="err-eventName"></p></div>
           <div class="field"><label for="s-type">Type of event</label>
@@ -131,6 +131,8 @@
         <div class="field">
           <label class="consent"><input name="consent" type="checkbox" required aria-describedby="err-consent" data-msg="Tick the box so we can contact you."><span>I agree that 1 Phone, 2 Thrones may store these details and contact me about this invitation. <a href="/privacy">Privacy Policy</a></span></label>
           <p class="err" id="err-consent"></p>
+          <label class="consent"><input name="adult" type="checkbox" required aria-describedby="err-adult" data-msg="Please confirm that you are 18 or over."><span>I am 18 years old or over.</span></label>
+          <p class="err" id="err-adult"></p>
         </div>
         <button class="btn solid" type="submit">Send invitation</button>
         <p class="msg" role="status" aria-live="polite"></p>
@@ -200,6 +202,7 @@
         <a href="https://www.youtube.com/@ajagbe_samuel" target="_blank" rel="noopener">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         <a href="https://www.instagram.com/ajagbesamuelolajide" target="_blank" rel="noopener">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
         <a href="https://www.facebook.com/ajagbesamuelolajide" target="_blank" rel="noopener">Facebook<span class="sr-only"> (opens in a new tab)</span></a>
+        <a href="https://whatsapp.com/channel/0029VbE4adbIXnlljjpR1I0Y" target="_blank" rel="noopener">WhatsApp Channel<span class="sr-only"> (opens in a new tab)</span></a>
       </div>
     </div>
   </div>
